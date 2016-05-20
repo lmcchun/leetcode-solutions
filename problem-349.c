@@ -18,7 +18,7 @@ int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* ret
 		nums2Size = intTemp;
 	}
 
-	int* flagArray = malloc(sizeof(int) * nums1Size);
+	int* flagArray = (int*) malloc(sizeof(int) * nums1Size);
 	for (int i = 0; i < nums1Size; i++) {
 		flagArray[i] = 0;
 	}
@@ -26,9 +26,11 @@ int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* ret
 	int intersectionCount = 0;
 	for (int i = 0; i < nums2Size; i++) {
 		for (int j = 0; j < nums1Size; j++) {
-			if ((nums1[j] == nums2[i]) && (flagArray[j] == 0)) {
-				flagArray[j] = 1;
-				intersectionCount++;
+			if (nums1[j] == nums2[i]) {
+				if (flagArray[j] == 0) {
+					flagArray[j] = 1;
+					intersectionCount++;
+				}
 				break;
 			}
 		}
@@ -47,6 +49,7 @@ int* intersection(int* nums1, int nums1Size, int* nums2, int nums2Size, int* ret
 			currentIndex++;
 		}
 	}
+	*returnSize = intersectionCount;
 
 	free(flagArray);
 
